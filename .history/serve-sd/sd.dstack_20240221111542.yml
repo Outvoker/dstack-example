@@ -1,0 +1,20 @@
+type: task
+
+# image: ollama/ollama:latest
+# NOTE ollama Docker image CUDA availability is not guaranteed, best to install it manually
+python: "3.11"
+env:
+  - OLLAMA_HOST=0.0.0.0:8000
+commands:
+  - nvidia-smi
+  - curl -fsSL https://ollama.com/install.sh | sh
+  # model pull needs ollama server; use a delayed background job
+  - sleep 5 && ollama pull mistral:instruct &
+  - ollama serve
+
+ports:
+  - 8000
+
+resources:
+  # quantized model can use smaller GPU
+  gpu: V100
