@@ -1,0 +1,11 @@
+type: task
+
+python: "3.8"
+
+commands:
+  - git clone https://github.com/oobabooga/text-generation-webui.git
+  - cd text-generation-webui
+  - wget -O models/llama-2-70b.gguf https://huggingface.co/TheBloke/Llama-2-70B-GGUF/resolve/main/llama-2-70b.Q4_K_M.gguf?download=true
+  - echo -e "A\nN" | ./start_linux.sh --api --loader llama.cpp --model llama-2-70b.gguf --n-gpu-layers 256
+resources:
+  gpu: 40GB
